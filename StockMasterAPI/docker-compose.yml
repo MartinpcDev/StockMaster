@@ -1,0 +1,15 @@
+services:
+  postresdb:
+    image: postgres:9.2
+    container_name: stockmasterDB
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: martinpc
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: stockmaster_db
+    volumes:
+      - postgresdb-data:/var/lib/postgresql/data
+
+volumes:
+  postgresdb-data:
