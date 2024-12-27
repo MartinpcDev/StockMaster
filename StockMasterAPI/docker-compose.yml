@@ -1,6 +1,6 @@
 services:
   postresdb:
-    image: postgres:9.2
+    image: postgres:latest
     container_name: stockmasterDB
     ports:
       - "5432:5432"
