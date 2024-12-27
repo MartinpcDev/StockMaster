@@ -1,6 +1,8 @@
 package com.management.api.controller;
 
+import com.management.api.dto.request.LoginRequest;
 import com.management.api.dto.request.RegisterRequest;
+import com.management.api.dto.response.AuthResponse;
 import com.management.api.dto.response.RegisterResponse;
 import com.management.api.service.IAuthService;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +24,10 @@ public class AuthController {
   @PostMapping("/register")
   public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
     return ResponseEntity.ok(authService.register(request));
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
+    return ResponseEntity.ok(authService.login(request));
   }
 }

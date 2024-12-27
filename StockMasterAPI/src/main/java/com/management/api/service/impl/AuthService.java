@@ -8,7 +8,9 @@ import com.management.api.exception.InvalidAuthException;
 import com.management.api.persistence.model.Usuario;
 import com.management.api.persistence.repository.UsuarioRepository;
 import com.management.api.service.IAuthService;
+import com.management.api.utils.JwtUtils;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +20,14 @@ public class AuthService implements IAuthService {
   private final UsuarioRepository usuarioRepository;
   private final PasswordEncoder passwordEncoder;
   private final AuthenticationManager authenticationManager;
+  private final JwtUtils jwtUtils;
 
   public AuthService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder,
-      AuthenticationManager authenticationManager) {
+      AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
     this.usuarioRepository = usuarioRepository;
     this.passwordEncoder = passwordEncoder;
     this.authenticationManager = authenticationManager;
+    this.jwtUtils = jwtUtils;
   }
 
   @Override
@@ -45,6 +49,19 @@ public class AuthService implements IAuthService {
 
   @Override
   public AuthResponse login(LoginRequest request) {
-    return null;
+    Usuario usuarioExiste = usuarioRepository.findByUsernameIgnoreCase(request.username())
+        .orElseThrow(() -> new InvalidAuthException("El usuario no esta registrado"));
+
+    if (!passwordEncoder.matches(request.password(), usuarioExiste.getPassword())) {
+      throw new InvalidAuthException("Contraseña incorrecta");
+    }
+
+    String token = jwtUtils.generateToken(usuarioExiste);
+
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(request.username(), request.password())
+    );
+
+    return new AuthResponse(token);
   }
 }
