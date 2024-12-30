@@ -5,12 +5,13 @@ import java.time.LocalDateTime;
 
 public record ProductResponse(
     Long id,
-    String name,
+    String nombre,
     String descripcion,
     Double precio,
     Integer stock,
-    ProductCategory category,
-    LocalDateTime fechaIngreso
+    ProductCategory categoria,
+    LocalDateTime fechaIngreso,
+    ProveedorResponse proveedor
 ) {
 
 }

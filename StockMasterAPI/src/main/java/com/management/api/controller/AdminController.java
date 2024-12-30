@@ -30,7 +30,7 @@ public class AdminController {
     System.out.println(pageable);
     return ResponseEntity.ok(adminService.findAllUsers(pageable));
   }
-  
+
   @DeleteMapping("/delete-user/{userId}")
   public ResponseEntity<GenericResponse> deleteUser(@PathVariable Long userId) {
     return ResponseEntity.ok(adminService.deleteUser(userId));

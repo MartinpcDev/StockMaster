@@ -5,4 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProveedorRepository extends JpaRepository<Proveedor, Long> {
 
+  boolean existsByNombre(String nombre);
+
+  boolean existsByTelefono(String telefono);
+
+  boolean existsByEmailIgnoreCase(String email);
 }
