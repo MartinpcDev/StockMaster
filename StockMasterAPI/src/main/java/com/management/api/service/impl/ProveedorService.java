@@ -11,6 +11,7 @@ import com.management.api.mapper.ProveedorMapper;
 import com.management.api.persistence.model.Proveedor;
 import com.management.api.persistence.repository.ProveedorRepository;
 import com.management.api.service.IProveedorService;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,7 @@ public class ProveedorService implements IProveedorService {
   }
 
   @Override
+  @Transactional
   public ProveedorResponse createProveedor(ProveedorRequest request) {
     if (proveedorRepository.existsByNombre(request.nombre())
         || proveedorRepository.existsByTelefono(request.telefono())
@@ -51,6 +53,7 @@ public class ProveedorService implements IProveedorService {
   }
 
   @Override
+  @Transactional
   public ProveedorResponse updateProveedor(Long id, UpdateProveedorRequest request) {
     Proveedor proveedor = proveedorRepository.findById(id)
         .orElseThrow(() -> new ProveedorNotFoundExcepticon("Proveedor no encontrado"));
@@ -60,6 +63,7 @@ public class ProveedorService implements IProveedorService {
   }
 
   @Override
+  @Transactional
   public GenericResponse deleteProveedor(Long id) {
     Proveedor proveedor = proveedorRepository.findById(id)
         .orElseThrow(() -> new ProveedorNotFoundExcepticon("Proveedor no encontrado"));

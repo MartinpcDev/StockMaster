@@ -1,6 +1,5 @@
 package com.management.api.dto.request;
 
-import com.management.api.persistence.model.ProductCategory;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -10,7 +9,7 @@ public record UpdateProductRequest(
     String nombre,
     @Size(min = 3, max = 255, message = "La descripción del producto debe tener entre 3 y 255 caracteres")
     String descripcion,
-    ProductCategory categoria,
+    String categoria,
     @Positive(message = "El precio del producto debe ser mayor a 0")
     @Max(value = 9999, message = "El precio del producto no puede ser mayor a 9999")
     Double precio,

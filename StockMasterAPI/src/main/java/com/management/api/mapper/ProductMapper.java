@@ -4,6 +4,7 @@ import com.management.api.dto.request.ProductRequest;
 import com.management.api.dto.request.UpdateProductRequest;
 import com.management.api.dto.response.ProductResponse;
 import com.management.api.persistence.model.Product;
+import com.management.api.persistence.model.ProductCategory;
 import java.util.List;
 
 public class ProductMapper {
@@ -20,7 +21,7 @@ public class ProductMapper {
         product.getStock(),
         product.getCategoria(),
         product.getFechaIngreso(),
-        ProveedorMapper.toProveedorResponse(product.getProveedor())
+        ProveedorMapper.toProveedorOnlyResponse(product.getProveedor())
     );
   }
 
@@ -39,7 +40,7 @@ public class ProductMapper {
     product.setDescripcion(productRequest.descripcion());
     product.setPrecio(productRequest.precio());
     product.setStock(productRequest.stock());
-    product.setCategoria(productRequest.categoria());
+    product.setCategoria(ProductCategory.valueOf(productRequest.categoria()));
 
     return product;
   }
@@ -59,7 +60,7 @@ public class ProductMapper {
         oldProduct.setStock(productRequest.stock());
       }
       if (productRequest.categoria() != null) {
-        oldProduct.setCategoria(productRequest.categoria());
+        oldProduct.setCategoria(ProductCategory.valueOf(productRequest.categoria()));
       }
     }
   }

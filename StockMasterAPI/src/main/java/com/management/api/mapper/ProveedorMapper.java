@@ -2,6 +2,7 @@ package com.management.api.mapper;
 
 import com.management.api.dto.request.ProveedorRequest;
 import com.management.api.dto.request.UpdateProveedorRequest;
+import com.management.api.dto.response.ProveedorOnlyResponse;
 import com.management.api.dto.response.ProveedorResponse;
 import com.management.api.persistence.model.Proveedor;
 import java.util.List;
@@ -19,6 +20,19 @@ public class ProveedorMapper {
         proveedor.getTelefono(),
         proveedor.getEmail(),
         ProductMapper.toProductResponseList(proveedor.getProducts())
+    );
+  }
+
+  public static ProveedorOnlyResponse toProveedorOnlyResponse(Proveedor proveedor) {
+    if (proveedor == null) {
+      return null;
+    }
+    return new ProveedorOnlyResponse(
+        proveedor.getId(),
+        proveedor.getNombre(),
+        proveedor.getDireccion(),
+        proveedor.getTelefono(),
+        proveedor.getEmail()
     );
   }
 

@@ -15,6 +15,7 @@ import com.management.api.persistence.model.Proveedor;
 import com.management.api.persistence.repository.ProductRepository;
 import com.management.api.persistence.repository.ProveedorRepository;
 import com.management.api.service.IProductService;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,7 @@ public class ProductService implements IProductService {
   }
 
   @Override
+  @Transactional
   public ProductResponse createProduct(ProductRequest request) {
     if (productRepository.existsByNombre(request.nombre())) {
       throw new IllegalArgumentException("Producto ya existe");
@@ -72,6 +74,7 @@ public class ProductService implements IProductService {
   }
 
   @Override
+  @Transactional
   public ProductResponse updateProduct(Long id, UpdateProductRequest request) {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> new ProductNotFoundExcepticon("Producto no encontrado"));
@@ -86,9 +89,12 @@ public class ProductService implements IProductService {
   }
 
   @Override
+  @Transactional
   public GenericResponse deleteProduct(Long id) {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> new ProductNotFoundExcepticon("Producto no encontrado"));
+    Proveedor proveedor = product.getProveedor();
+    proveedor.getProducts().remove(product);
     productRepository.delete(product);
     return new GenericResponse("Producto Correctamente eliminado");
   }

@@ -11,7 +11,7 @@ public record ProductResponse(
     Integer stock,
     ProductCategory categoria,
     LocalDateTime fechaIngreso,
-    ProveedorResponse proveedor
+    ProveedorOnlyResponse proveedor
 ) {
 
 }
