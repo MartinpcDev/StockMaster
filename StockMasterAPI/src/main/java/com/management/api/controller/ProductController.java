@@ -8,6 +8,7 @@ import com.management.api.dto.response.ProductResponse;
 import com.management.api.persistence.model.ProductCategory;
 import com.management.api.service.IProductService;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class ProductController {
   public ResponseEntity<ProductPageResponse> allProducts(
       @RequestParam(required = false) ProductCategory category,
       @RequestParam(required = false) Long proveedorId,
-      @PageableDefault(sort = {"id"}) Pageable pageable) {
+      @ParameterObject @PageableDefault(sort = {"id"}) Pageable pageable) {
     ProductPageResponse response;
     if (category != null) {
       response = productService.allProductsByCategory(category, pageable);

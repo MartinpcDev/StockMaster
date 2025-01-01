@@ -19,7 +19,7 @@ public class ProveedorMapper {
         proveedor.getDireccion(),
         proveedor.getTelefono(),
         proveedor.getEmail(),
-        ProductMapper.toProductResponseList(proveedor.getProducts())
+        ProductMapper.toProductOnlyResponseList(proveedor.getProducts())
     );
   }
 

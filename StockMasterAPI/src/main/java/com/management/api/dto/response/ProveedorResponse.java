@@ -8,7 +8,7 @@ public record ProveedorResponse(
     String direccion,
     String telefono,
     String email,
-    List<ProductResponse> products
+    List<ProductOnlyResponse> products
 ) {
 
 }

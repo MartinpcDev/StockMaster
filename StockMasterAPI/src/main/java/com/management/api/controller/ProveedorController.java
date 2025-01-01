@@ -7,6 +7,7 @@ import com.management.api.dto.response.ProveedorPageResponse;
 import com.management.api.dto.response.ProveedorResponse;
 import com.management.api.service.IProveedorService;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class ProveedorController {
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   @GetMapping
   public ResponseEntity<ProveedorPageResponse> allProveedores(
-      @PageableDefault(sort = {"id"}) Pageable pageable) {
+      @ParameterObject @PageableDefault(sort = {"id"}) Pageable pageable) {
     ProveedorPageResponse response = proveedorService.allProveedores(pageable);
     return ResponseEntity.ok(response);
   }

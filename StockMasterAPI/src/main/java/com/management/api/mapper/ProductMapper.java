@@ -2,6 +2,7 @@ package com.management.api.mapper;
 
 import com.management.api.dto.request.ProductRequest;
 import com.management.api.dto.request.UpdateProductRequest;
+import com.management.api.dto.response.ProductOnlyResponse;
 import com.management.api.dto.response.ProductResponse;
 import com.management.api.persistence.model.Product;
 import com.management.api.persistence.model.ProductCategory;
@@ -23,6 +24,27 @@ public class ProductMapper {
         product.getFechaIngreso(),
         ProveedorMapper.toProveedorOnlyResponse(product.getProveedor())
     );
+  }
+
+  public static ProductOnlyResponse toProductOnlyResponse(Product product) {
+    if (product == null) {
+      return null;
+    }
+    return new ProductOnlyResponse(
+        product.getId(),
+        product.getNombre(),
+        product.getDescripcion(),
+        product.getPrecio(),
+        product.getStock(),
+        product.getCategoria(),
+        product.getFechaIngreso()
+    );
+  }
+
+  public static List<ProductOnlyResponse> toProductOnlyResponseList(List<Product> products) {
+    return products.stream()
+        .map(ProductMapper::toProductOnlyResponse)
+        .toList();
   }
 
   public static List<ProductResponse> toProductResponseList(List<Product> products) {
