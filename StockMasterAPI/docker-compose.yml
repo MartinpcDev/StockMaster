@@ -1,15 +1,33 @@
 services:
+
+  spring-api-image:
+    image: spring-api-image
+    container_name: spring-api-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - stockmaster-network
+    depends_on:
+      - postresdb
+
   postresdb:
     image: postgres:latest
     container_name: stockmasterDB
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_USER: martinpc
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: stockmaster_db
+    ports:
+      - "5432:5432"
+    networks:
+      - stockmaster-network
     volumes:
       - postgresdb-data:/var/lib/postgresql/data
 
+networks:
+  stockmaster-network:
 volumes:
   postgresdb-data:
