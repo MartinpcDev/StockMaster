@@ -1,0 +1,495 @@
+{
+	"info": {
+		"_postman_id": "570384e1-1385-4158-a0a6-2d9f58062a00",
+		"name": "StockMaster",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29482381"
+	},
+	"item": [
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "REGISTER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"prueba apellido\",\r\n    \"email\": \"prueba@hotmail.com\",\r\n    \"username\": \"prueba1\",\r\n    \"password\": \"prueba123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"martinpc\",\r\n    \"password\": \"76199405\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ADMIN",
+			"item": [
+				{
+					"name": "ALL USERS",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoibWFydGlucGMiLCJpYXQiOjE3MzU2MTk3NjgsImV4cCI6MTczNTY2Mjk2OH0.ppzoJNL4fXFEr4QOAWyNe-udMqxZbB2DOx8XAOaBm7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{spring_url}}/admin/all-users",
+							"host": [
+								"{{spring_url}}"
+							],
+							"path": [
+								"admin",
+								"all-users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE USER",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoibWFydGlucGMiLCJpYXQiOjE3MzU0NDc3NjAsImV4cCI6MTczNTQ5MDk2MH0.IEvsV4lKY2DcCQvrR5Qqb7eg7DsGD-IFdOMFL-zwAlo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/admin/delete-user/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"delete-user",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PROVEEDOR",
+			"item": [
+				{
+					"name": "GET ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoibWFydGlucGMiLCJpYXQiOjE3MzU4NDkyOTgsImV4cCI6MTczNTg5MjQ5OH0.lh4YnAWt9Rn5nQhyqnkTk6ZRsbv0FlaZPAy4KgJfjiY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{spring_url}}/proveedores",
+							"host": [
+								"{{spring_url}}"
+							],
+							"path": [
+								"proveedores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BY ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoibWFydGlucGMiLCJpYXQiOjE3MzU2MTk3NjgsImV4cCI6MTczNTY2Mjk2OH0.ppzoJNL4fXFEr4QOAWyNe-udMqxZbB2DOx8XAOaBm7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{spring_url}}/proveedores/2",
+							"host": [
+								"{{spring_url}}"
+							],
+							"path": [
+								"proveedores",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoibWFydGlucGMiLCJpYXQiOjE3MzU2MTk3NjgsImV4cCI6MTczNTY2Mjk2OH0.ppzoJNL4fXFEr4QOAWyNe-udMqxZbB2DOx8XAOaBm7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"prueba\",\r\n    \"direccion\":\"calle la prueba 2\",\r\n    \"telefono\":\"968754231\",\r\n    \"email\":\"prueba@hotmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{spring_url}}/proveedores",
+							"host": [
+								"{{spring_url}}"
+							],
+							"path": [
+								"proveedores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoibWFydGlucGMiLCJpYXQiOjE3MzU2MTk3NjgsImV4cCI6MTczNTY2Mjk2OH0.ppzoJNL4fXFEr4QOAWyNe-udMqxZbB2DOx8XAOaBm7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"prueba corregida\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{spring_url}}/proveedores/3",
+							"host": [
+								"{{spring_url}}"
+							],
+							"path": [
+								"proveedores",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoibWFydGlucGMiLCJpYXQiOjE3MzU2MTk3NjgsImV4cCI6MTczNTY2Mjk2OH0.ppzoJNL4fXFEr4QOAWyNe-udMqxZbB2DOx8XAOaBm7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{spring_url}}/proveedores/3",
+							"host": [
+								"{{spring_url}}"
+							],
+							"path": [
+								"proveedores",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PRODUCTS",
+			"item": [
+				{
+					"name": "GET ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoibWFydGlucGMiLCJpYXQiOjE3MzU2ODk0MDAsImV4cCI6MTczNTczMjYwMH0.NTM1r3u4cydh2zX3Ot7H43z7Rsvcq4TIURJvG8I_NNw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{spring_url}}/products",
+							"host": [
+								"{{spring_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "VESTIMENTA",
+									"disabled": true
+								},
+								{
+									"key": "proveedorId",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BY ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoibWFydGlucGMiLCJpYXQiOjE3MzU2MTk3NjgsImV4cCI6MTczNTY2Mjk2OH0.ppzoJNL4fXFEr4QOAWyNe-udMqxZbB2DOx8XAOaBm7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{spring_url}}/products/4",
+							"host": [
+								"{{spring_url}}"
+							],
+							"path": [
+								"products",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoibWFydGlucGMiLCJpYXQiOjE3MzU2MTk3NjgsImV4cCI6MTczNTY2Mjk2OH0.ppzoJNL4fXFEr4QOAWyNe-udMqxZbB2DOx8XAOaBm7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Vestido prueba\",\r\n    \"descripcion\": \"Vestido de gala rosado\",\r\n    \"categoria\": \"VESTIMENTA\",\r\n    \"precio\": 350,\r\n    \"stock\": 160,\r\n    \"proveedorId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{spring_url}}/products",
+							"host": [
+								"{{spring_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoibWFydGlucGMiLCJpYXQiOjE3MzU2MTk3NjgsImV4cCI6MTczNTY2Mjk2OH0.ppzoJNL4fXFEr4QOAWyNe-udMqxZbB2DOx8XAOaBm7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"stock\": 50,\r\n    \"proveedorId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{spring_url}}/products/1",
+							"host": [
+								"{{spring_url}}"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3ViIjoibWFydGlucGMiLCJpYXQiOjE3MzU2MTk3NjgsImV4cCI6MTczNTY2Mjk2OH0.ppzoJNL4fXFEr4QOAWyNe-udMqxZbB2DOx8XAOaBm7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"stock\": 50,\r\n    \"proveedorId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{spring_url}}/products/4",
+							"host": [
+								"{{spring_url}}"
+							],
+							"path": [
+								"products",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
