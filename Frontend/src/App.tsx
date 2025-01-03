@@ -1,8 +1,14 @@
+import { Route, Switch } from 'wouter';
+import { ProtectedRoute } from './pages/ProtectedRoute';
+import { DashboardPage } from './pages/DashboardPage';
+import { LoginPage } from './pages/LoginPage';
+
 function App() {
 	return (
-		<>
-			<h1 className='bg-red-500 text-white'>Stock Master</h1>
-		</>
+		<Switch>
+			<Route path='/' component={LoginPage} />
+			<ProtectedRoute path='/dashboard' component={DashboardPage} />
+		</Switch>
 	);
 }
 
