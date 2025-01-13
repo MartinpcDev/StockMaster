@@ -16,11 +16,11 @@ export const LoginForm: React.FC = () => {
 	} = useForm<LoginRequest>();
 
 	const [, setLocation] = useLocation();
-	const { login } = useAuth();
+	const { isError, login } = useAuth();
 
 	const onSubmit = handleSubmit(data => {
-		console.log(data);
-		login();
+		console.log(isError);
+		login(data);
 		setLocation('/dashboard');
 	});
 

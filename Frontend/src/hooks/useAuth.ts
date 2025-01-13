@@ -1,10 +1,12 @@
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { LoginRequest } from '../models/auth.model';
 
 interface AuthContextType {
 	isAuthenticated: boolean;
-	login: VoidFunction;
+	login: (req: LoginRequest) => Promise<void>;
 	logout: VoidFunction;
+	isError: string | undefined;
 }
 
 export const useAuth = (): AuthContextType => {
