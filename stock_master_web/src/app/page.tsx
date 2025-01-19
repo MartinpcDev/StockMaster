@@ -1,7 +1,7 @@
 import { Title } from '@/components/common/Title';
 import { LoginForm } from '@/components/login/LoginForm';
 
-export default function HomePage() {
+export default async function HomePage() {
 	return (
 		<>
 			<section className='section-center'>

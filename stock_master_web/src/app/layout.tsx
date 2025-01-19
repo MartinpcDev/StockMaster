@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { montserrat } from '@/utils/fonts';
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -14,7 +15,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={`${montserrat.className} antialiased`}>{children}</body>
+			<body className={`${montserrat.className} antialiased`}>
+				<Toaster position='top-right' richColors />
+				{children}
+			</body>
 		</html>
 	);
 }

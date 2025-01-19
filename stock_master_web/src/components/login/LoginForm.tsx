@@ -1,6 +1,11 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '../common/ErrorMessage';
+import { api } from '@/utils/http-config';
+import { AxiosError } from 'axios';
+import { setCustomCookies } from '@/utils/cookies';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 interface LoginData {
 	username: string;
@@ -8,6 +13,7 @@ interface LoginData {
 }
 
 export const LoginForm: React.FC = ({}) => {
+	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
@@ -15,7 +21,16 @@ export const LoginForm: React.FC = ({}) => {
 	} = useForm<LoginData>();
 
 	const onSubmit = handleSubmit(async data => {
-		console.log(data);
+		try {
+			const response = await api.post('/auth/login', data);
+			await setCustomCookies('token', response.data.token);
+			toast.success('Inicio de Sesion Exitosa');
+			router.push('/dashboard');
+		} catch (error) {
+			if (error instanceof AxiosError) {
+				toast.error(error.response?.data.error);
+			}
+		}
 	});
 
 	return (
