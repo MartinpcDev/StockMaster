@@ -1,8 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
-body{
-  @apply absolute top-0 z-[-2] h-screen w-screen bg-primary text-parrafo;
-}
