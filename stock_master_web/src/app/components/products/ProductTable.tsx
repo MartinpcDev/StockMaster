@@ -1,5 +1,5 @@
-import { Product } from '@/models/product.model';
-import { dateFormat } from '@/utils/dateFormat';
+import { Product } from '@/app/models/product.model';
+import { dateFormat } from '@/app/utils/dateFormat';
 
 interface TableProps {
 	products: Product[];

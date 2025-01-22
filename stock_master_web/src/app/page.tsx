@@ -1,5 +1,5 @@
-import { Title } from '@/components/common/Title';
-import { LoginForm } from '@/components/login/LoginForm';
+import { Title } from '@/app/components/common/Title';
+import { LoginForm } from '@/app/components/login/LoginForm';
 
 export default async function HomePage() {
 	return (

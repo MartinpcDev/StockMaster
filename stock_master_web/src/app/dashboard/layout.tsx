@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import { montserrat } from '@/utils/fonts';
+import { montserrat } from '@/app/utils/fonts';
 import { Toaster } from 'sonner';
-import { SiderbarButton } from '@/components/sidebar/SiderbarButton';
-import { Sidebar } from '@/components/sidebar/Sidebar';
+import { SiderbarButton } from '@/app/components/sidebar/SiderbarButton';
+import { Sidebar } from '@/app/components/sidebar/Sidebar';
 
 export const metadata: Metadata = {
 	title: 'StockMaster Dashboard',
@@ -20,7 +20,11 @@ export default function RootLayout({
 				<Toaster position='top-right' richColors />
 				<SiderbarButton />
 				<Sidebar />
-				{children}
+				<section className='p-4 sm:ml-64 h-screen'>
+					<div className='p-4 border-2 rounded-lg border-gray-700 bg-gray-950 h-full'>
+						{children}
+					</div>
+				</section>
 			</body>
 		</html>
 	);

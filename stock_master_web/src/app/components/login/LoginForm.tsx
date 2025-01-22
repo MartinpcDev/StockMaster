@@ -1,26 +1,22 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '../common/ErrorMessage';
-import { api } from '@/utils/http-config';
-import { AxiosError } from 'axios';
-import { setCustomCookies } from '@/utils/cookies';
-import { useRouter } from 'next/navigation';
+import { LoginData } from '@/app/models/auth.model';
+import { api } from '@/app/utils/http-config';
+import { setCustomCookies } from '@/app/utils/cookies';
 import { toast } from 'sonner';
+import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 
-interface LoginData {
-	username: string;
-	password: string;
-}
-
-export const LoginForm: React.FC = ({}) => {
-	const router = useRouter();
+export const LoginForm: React.FC = () => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors }
 	} = useForm<LoginData>();
+	const router = useRouter();
 
-	const onSubmit = handleSubmit(async data => {
+	const onSubmit = handleSubmit(async (data: LoginData) => {
 		try {
 			const response = await api.post('/auth/login', data);
 			await setCustomCookies('token', response.data.token);
