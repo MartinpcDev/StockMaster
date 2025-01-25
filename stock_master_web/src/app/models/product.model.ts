@@ -7,3 +7,5 @@ export interface Product {
 	categoria: string;
 	fechaIngreso: string;
 }
+
+type ProductForm = Omit<Product, 'id'>;
