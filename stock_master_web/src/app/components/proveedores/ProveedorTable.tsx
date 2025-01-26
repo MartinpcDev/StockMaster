@@ -5,7 +5,7 @@ import { extractCustomCookie } from '@/app/utils/cookies';
 import { api } from '@/app/utils/http-config';
 import { AxiosError } from 'axios';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 interface ProveedorTableProps {
@@ -16,6 +16,10 @@ export const ProveedorTable: React.FC<ProveedorTableProps> = ({
 	proveedores
 }) => {
 	const [data, setData] = useState<Proveedor[]>(proveedores);
+
+	useEffect(() => {
+		setData(proveedores);
+	}, [proveedores]);
 
 	const deletePost = async (id: number) => {
 		const token = await extractCustomCookie('token');

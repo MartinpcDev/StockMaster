@@ -6,7 +6,7 @@ import { dateFormat } from '@/app/utils/dateFormat';
 import { api } from '@/app/utils/http-config';
 import { AxiosError } from 'axios';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 interface TableProps {
@@ -15,6 +15,10 @@ interface TableProps {
 
 export const ProductTable: React.FC<TableProps> = ({ products }) => {
 	const [data, setData] = useState<Product[]>(products);
+
+	useEffect(() => {
+		setData(products);
+	}, [products]);
 
 	const deletePost = async (id: number) => {
 		const token = await extractCustomCookie('token');
