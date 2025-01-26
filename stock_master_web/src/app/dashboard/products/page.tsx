@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default async function ProductsPage() {
 	const token = await extractCustomCookie('token');
 	const products = await api.get('/products', {
-		headers: { Authorization: `Bearer ${token}` }
+		headers: { Authorization: `Bearer ${token.toString()}` }
 	});
 	return (
 		<>

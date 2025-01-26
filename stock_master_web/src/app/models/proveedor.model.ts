@@ -6,4 +6,4 @@ export interface Proveedor {
 	email: string;
 }
 
-type ProveedorForm = Omit<Proveedor, 'id'>;
+export type ProveedorFormType = Omit<Proveedor, 'id'>;

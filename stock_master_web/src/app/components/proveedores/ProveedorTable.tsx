@@ -20,7 +20,7 @@ export const ProveedorTable: React.FC<ProveedorTableProps> = ({
 	const deletePost = async (id: number) => {
 		const token = await extractCustomCookie('token');
 		api
-			.delete(`/products/${id}`, {
+			.delete(`/proveedores/${id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`
 				}

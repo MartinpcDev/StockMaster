@@ -64,7 +64,7 @@ export const Sidebar: React.FC = ({}) => {
 						<li>
 							<button
 								onClick={logout}
-								className='flex justify-start text-start p-2 rounded-lg text-white hover:bg-gray-700 group w-full'>
+								className='flex justify-start text-start p-2 rounded-lg text-white hover:bg-gray-700   hover:text-red-500 group w-full'>
 								<LogoutIcon />
 								<span className='flex-1 ms-3 whitespace-nowrap'>
 									Cerrar Sesion
