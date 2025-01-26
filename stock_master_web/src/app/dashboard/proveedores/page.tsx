@@ -1,7 +1,9 @@
+import { Loading } from '@/app/components/common/Loading';
 import { ProveedorTable } from '@/app/components/proveedores/ProveedorTable';
 import { extractCustomCookie } from '@/app/utils/cookies';
 import { api } from '@/app/utils/http-config';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default async function ProveedorPage({}) {
 	const token = await extractCustomCookie('token');
@@ -18,7 +20,9 @@ export default async function ProveedorPage({}) {
 					Agregar Proveedor
 				</Link>
 			</div>
-			<ProveedorTable proveedores={proveedores.data.proveedores} />
+			<Suspense fallback={<Loading />}>
+				<ProveedorTable proveedores={proveedores.data.proveedores} />
+			</Suspense>
 		</>
 	);
 }

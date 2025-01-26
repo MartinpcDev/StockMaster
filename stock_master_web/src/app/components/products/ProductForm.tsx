@@ -1,0 +1,166 @@
+'use client';
+
+import { productCategory, ProductTypeForm } from '@/app/models/product.model';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '../common/ErrorMessage';
+import { Proveedor } from '@/app/models/proveedor.model';
+import { toast } from 'sonner';
+import { api } from '@/app/utils/http-config';
+import { AxiosError } from 'axios';
+
+interface ProductFormProps {
+	token: string;
+	proveedores: Proveedor[];
+}
+
+export const ProductForm: React.FC<ProductFormProps> = ({
+	token,
+	proveedores
+}) => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors }
+	} = useForm<ProductTypeForm>();
+	const router = useRouter();
+
+	const onSubmit = handleSubmit(async data => {
+		try {
+			await api.post('/products', data, {
+				headers: { Authorization: `Bearer ${token}` }
+			});
+			toast.success('Producto Creado Satisfactoriamente');
+			router.push('/dashboard/products');
+		} catch (error) {
+			if (error instanceof AxiosError) {
+				toast.error(error.response?.data.error);
+			}
+		}
+	});
+
+	return (
+		<>
+			<form onSubmit={onSubmit} className='max-w-sm mx-auto'>
+				<div className='mb-5'>
+					<label
+						htmlFor='nombre'
+						className='block mb-2 text-sm font-medium text-white'>
+						Nombre
+					</label>
+					<input
+						type='text'
+						id='nombre'
+						className='mb-2 border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
+						placeholder='lucas alfonso pereira cartagena'
+						{...register('nombre', { required: 'El nombre es requerido' })}
+					/>
+					{errors.nombre?.message && (
+						<ErrorMessage message={errors.nombre.message} />
+					)}
+				</div>
+				<div className='mb-5'>
+					<label
+						htmlFor='descripcion'
+						className='block mb-2 text-sm font-medium text-white'>
+						Descripcion
+					</label>
+					<input
+						type='text'
+						id='descripcion'
+						className='mb-2 border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
+						{...register('descripcion', {
+							required: 'La descripcion es requerida'
+						})}
+					/>
+					{errors.descripcion?.message && (
+						<ErrorMessage message={errors.descripcion.message} />
+					)}
+				</div>
+				<div className='mb-5'>
+					<label
+						htmlFor='precio'
+						className='block mb-2 text-sm font-medium text-white'>
+						Precio
+					</label>
+					<input
+						type='number'
+						id='precio'
+						className='mb-2 border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
+						{...register('precio', { required: 'El precio es requerido' })}
+					/>
+					{errors.precio?.message && (
+						<ErrorMessage message={errors.precio.message} />
+					)}
+				</div>
+				<div className='mb-5'>
+					<label
+						htmlFor='stock'
+						className='block mb-2 text-sm font-medium text-white'>
+						Stock
+					</label>
+					<input
+						type='number'
+						id='stock'
+						className='mb-2 border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
+						{...register('stock', { required: 'El stock es requerido' })}
+					/>
+					{errors.stock?.message && (
+						<ErrorMessage message={errors.stock.message} />
+					)}
+				</div>
+				<div className='mb-5'>
+					<label
+						htmlFor='categoria'
+						className='block mb-2 text-sm font-medium text-white'>
+						Seleccione una categoria
+					</label>
+					<select
+						id='categoria'
+						defaultValue=''
+						className='border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
+						{...register('categoria', {
+							required: 'La categoria es requerida'
+						})}>
+						<option value='' disabled>
+							Seleccione una categoria
+						</option>
+						{productCategory.map((category, index) => (
+							<option key={index} value={category}>
+								{category}
+							</option>
+						))}
+					</select>
+				</div>
+				<div className='mb-5'>
+					<label
+						htmlFor='proveedor'
+						className='block mb-2 text-sm font-medium text-white'>
+						Seleccione un Proveedor
+					</label>
+					<select
+						id='proveedor'
+						defaultValue=''
+						className='border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
+						{...register('proveedorId', {
+							required: 'El proveedor es requerido'
+						})}>
+						<option value='' disabled>
+							Seleccione un Proveedor
+						</option>
+						{proveedores.map(proveedor => (
+							<option key={proveedor.id} value={proveedor.id}>
+								{proveedor.nombre}
+							</option>
+						))}
+					</select>
+				</div>
+				<button
+					type='submit'
+					className='text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'>
+					Crear Proveedor
+				</button>
+			</form>
+		</>
+	);
+};

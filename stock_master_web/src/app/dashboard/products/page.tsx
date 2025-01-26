@@ -1,7 +1,9 @@
+import { Loading } from '@/app/components/common/Loading';
 import { ProductTable } from '@/app/components/products/ProductTable';
 import { extractCustomCookie } from '@/app/utils/cookies';
 import { api } from '@/app/utils/http-config';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default async function ProductsPage() {
 	const token = await extractCustomCookie('token');
@@ -18,7 +20,9 @@ export default async function ProductsPage() {
 					Agregar Producto
 				</Link>
 			</div>
-			<ProductTable products={products.data.productos} />
+			<Suspense fallback={<Loading />}>
+				<ProductTable products={products.data.productos} />
+			</Suspense>
 		</>
 	);
 }
