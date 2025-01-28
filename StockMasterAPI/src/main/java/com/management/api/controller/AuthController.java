@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,7 +52,7 @@ public class AuthController {
       }
   )
   @PostMapping("/register")
-  public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
+  public ResponseEntity<RegisterResponse> register(@RequestBody @Valid RegisterRequest request) {
     return ResponseEntity.ok(authService.register(request));
   }
 
@@ -80,7 +81,7 @@ public class AuthController {
       }
   )
   @PostMapping("/login")
-  public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
+  public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest request) {
     return ResponseEntity.ok(authService.login(request));
   }
 }
