@@ -1,19 +1,18 @@
 'use client';
 
-import { Proveedor } from '@/app/models/proveedor.model';
-import { extractCustomCookie } from '@/app/utils/cookies';
+import { User } from '@/app/models/users.model';
+import { dateFormat } from '@/app/utils/dateFormat';
 import { api } from '@/app/utils/http-config';
 import { AxiosError } from 'axios';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-interface ProveedorTableProps {
+interface UsersTableProps {
 	token: string;
 }
 
-export const ProveedorTable: React.FC<ProveedorTableProps> = ({ token }) => {
-	const [data, setData] = useState<Proveedor[]>([]);
+export const UsersTable: React.FC<UsersTableProps> = ({ token }) => {
+	const [data, setData] = useState<User[]>([]);
 	const [page, setPage] = useState<number>(0);
 	const [total, setTotal] = useState<number>(1);
 	const [size, setSize] = useState<number>(0);
@@ -22,10 +21,11 @@ export const ProveedorTable: React.FC<ProveedorTableProps> = ({ token }) => {
 	useEffect(() => {
 		async function getData() {
 			try {
-				const response = await api.get(`/proveedores?page=${page}`, {
+				const response = await api.get(`/admin/all-users?page=${page}`, {
 					headers: { Authorization: `Bearer ${token}` }
 				});
-				setData(response.data.proveedores);
+				console.log(response);
+				setData(response.data.usuarios);
 				setPage(response.data.page);
 				setSize(response.data.size);
 				setTotal(response.data.total);
@@ -40,18 +40,15 @@ export const ProveedorTable: React.FC<ProveedorTableProps> = ({ token }) => {
 	}, [page, token, size, total]);
 
 	const deletePost = async (id: number) => {
-		const token = await extractCustomCookie('token');
 		api
-			.delete(`/proveedores/${id}`, {
+			.delete(`/admin/delete-user/${id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`
 				}
 			})
 			.then(res => {
 				toast.success(res.data.message);
-				setData(prevState =>
-					prevState.filter(proveedor => proveedor.id !== id)
-				);
+				setData(prevState => prevState.filter(product => product.id !== id));
 			})
 			.catch(error => {
 				if (error instanceof AxiosError) {
@@ -82,43 +79,39 @@ export const ProveedorTable: React.FC<ProveedorTableProps> = ({ token }) => {
 								Nombre
 							</th>
 							<th scope='col' className='px-6 py-3'>
-								Direccion
-							</th>
-							<th scope='col' className='px-6 py-3'>
-								Telefono
-							</th>
-							<th scope='col' className='px-6 py-3'>
 								Email
 							</th>
-							<th scope='col' className='px-6 py-3'></th>
+							<th scope='col' className='px-6 py-3'>
+								Username
+							</th>
+							<th scope='col' className='px-6 py-3'>
+								Rol
+							</th>
+							<th scope='col' className='px-6 py-3'>
+								Fecha de Creacion
+							</th>
 							<th scope='col' className='px-6 py-3'></th>
 						</tr>
 					</thead>
 					<tbody>
-						{data.map(proveedor => (
+						{data.map(user => (
 							<tr
-								key={proveedor.id}
+								key={user.id}
 								className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
 								<th
 									scope='row'
 									className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
-									{proveedor.nombre}
+									{user.nombre}
 								</th>
-								<td className='px-6 py-4'>{proveedor.direccion}</td>
-								<td className='px-6 py-4'>{proveedor.telefono}</td>
-								<td className='px-6 py-4'>{proveedor.email}</td>
+								<td className='px-6 py-4'>{user.email}</td>
+								<td className='px-6 py-4'>{user.username}</td>
+								<td className='px-6 py-4'>{user.role}</td>
 								<td className='px-6 py-4'>
-									<Link
-										href={`/dashboard/proveedores/${encodeURIComponent(
-											proveedor.id
-										)}`}
-										className='font-medium text-yellow-400 hover:underline'>
-										Editar
-									</Link>
+									{dateFormat(new Date(user.createdAt))}
 								</td>
 								<td className='px-6 py-4'>
 									<button
-										onClick={() => deletePost(proveedor.id)}
+										onClick={() => deletePost(user.id)}
 										className='font-medium text-red-400 hover:underline'>
 										Eliminar
 									</button>

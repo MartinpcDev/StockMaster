@@ -21,7 +21,7 @@ export default function RootLayout({
 				<SiderbarButton />
 				<Sidebar />
 				<section className='p-4 sm:ml-64 h-screen'>
-					<div className='p-4 border-2 rounded-lg border-gray-700 bg-gray-950 h-full'>
+					<div className='flex flex-col justify-center p-4 border-2 rounded-lg border-gray-700 bg-gray-950 h-full'>
 						{children}
 					</div>
 				</section>

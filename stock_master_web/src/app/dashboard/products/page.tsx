@@ -1,15 +1,12 @@
 import { Loading } from '@/app/components/common/Loading';
 import { ProductTable } from '@/app/components/products/ProductTable';
 import { extractCustomCookie } from '@/app/utils/cookies';
-import { api } from '@/app/utils/http-config';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
 export default async function ProductsPage() {
-	const token = await extractCustomCookie('token');
-	const products = await api.get('/products', {
-		headers: { Authorization: `Bearer ${token.toString()}` }
-	});
+	const token = (await extractCustomCookie('token')).toString();
+
 	return (
 		<>
 			<div className='flex justify-end'>
@@ -21,7 +18,7 @@ export default async function ProductsPage() {
 				</Link>
 			</div>
 			<Suspense fallback={<Loading />}>
-				<ProductTable products={products.data.productos} />
+				<ProductTable token={token} />
 			</Suspense>
 		</>
 	);

@@ -1,7 +1,7 @@
 'use client';
 
 import {
-	EditProduct,
+	Product,
 	productCategory,
 	ProductTypeForm
 } from '@/app/models/product.model';
@@ -14,7 +14,7 @@ import { ErrorMessage } from '../common/ErrorMessage';
 import { Proveedor } from '@/app/models/proveedor.model';
 
 interface EditProductFormProps {
-	product: EditProduct;
+	product: Product;
 	proveedores: Proveedor[];
 	token: string;
 	id: string;
@@ -50,7 +50,7 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
 	return (
 		<>
 			{product && (
-				<form onSubmit={onSubmit} className='max-w-sm mx-auto'>
+				<form onSubmit={onSubmit} className='w-1/3 min-w-96 mx-auto'>
 					<div className='mb-5'>
 						<label
 							htmlFor='nombre'

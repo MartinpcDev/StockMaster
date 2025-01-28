@@ -1,15 +1,12 @@
 import { Loading } from '@/app/components/common/Loading';
 import { ProveedorTable } from '@/app/components/proveedores/ProveedorTable';
 import { extractCustomCookie } from '@/app/utils/cookies';
-import { api } from '@/app/utils/http-config';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
 export default async function ProveedorPage({}) {
-	const token = await extractCustomCookie('token');
-	const proveedores = await api.get('/proveedores', {
-		headers: { Authorization: `Bearer ${token}` }
-	});
+	const token = (await extractCustomCookie('token')).toString();
+
 	return (
 		<>
 			<div className='flex justify-end'>
@@ -21,7 +18,7 @@ export default async function ProveedorPage({}) {
 				</Link>
 			</div>
 			<Suspense fallback={<Loading />}>
-				<ProveedorTable proveedores={proveedores.data.proveedores} />
+				<ProveedorTable token={token} />
 			</Suspense>
 		</>
 	);

@@ -1,44 +1,32 @@
 'use client';
 
-import { productCategory, ProductTypeForm } from '@/app/models/product.model';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { ErrorMessage } from '../common/ErrorMessage';
-import { Proveedor } from '@/app/models/proveedor.model';
-import { toast } from 'sonner';
+import { UserFormsType, userRole } from '@/app/models/users.model';
 import { api } from '@/app/utils/http-config';
 import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { ErrorMessage } from '../common/ErrorMessage';
 
-interface ProductFormProps {
-	token: string;
-	proveedores: Proveedor[];
-}
-
-export const ProductForm: React.FC<ProductFormProps> = ({
-	token,
-	proveedores
-}) => {
+export const UsersForm: React.FC = ({}) => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors }
-	} = useForm<ProductTypeForm>();
+	} = useForm<UserFormsType>();
 	const router = useRouter();
 
 	const onSubmit = handleSubmit(async data => {
 		try {
-			await api.post('/products', data, {
-				headers: { Authorization: `Bearer ${token}` }
-			});
-			toast.success('Producto Creado Satisfactoriamente');
-			router.push('/dashboard/products');
+			const response = await api.post('/auth/register', data);
+			toast.success(response.data.message);
+			router.push('/dashboard/users');
 		} catch (error) {
 			if (error instanceof AxiosError) {
 				toast.error(error.response?.data.error);
 			}
 		}
 	});
-
 	return (
 		<>
 			<form onSubmit={onSubmit} className='w-1/3 min-w-96 mx-auto'>
@@ -61,96 +49,73 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 				</div>
 				<div className='mb-5'>
 					<label
-						htmlFor='descripcion'
+						htmlFor='email'
 						className='block mb-2 text-sm font-medium text-white'>
-						Descripcion
+						Email
 					</label>
 					<input
 						type='text'
-						id='descripcion'
+						id='email'
 						className='mb-2 border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
-						{...register('descripcion', {
-							required: 'La descripcion es requerida'
+						{...register('email', {
+							required: 'El email es requerido'
 						})}
 					/>
-					{errors.descripcion?.message && (
-						<ErrorMessage message={errors.descripcion.message} />
+					{errors.email?.message && (
+						<ErrorMessage message={errors.email.message} />
 					)}
 				</div>
 				<div className='mb-5'>
 					<label
-						htmlFor='precio'
+						htmlFor='username'
 						className='block mb-2 text-sm font-medium text-white'>
-						Precio
+						Username
 					</label>
 					<input
-						type='number'
-						id='precio'
+						type='text'
+						id='username'
 						className='mb-2 border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
-						{...register('precio', { required: 'El precio es requerido' })}
+						{...register('username', { required: 'El username es requerido' })}
 					/>
-					{errors.precio?.message && (
-						<ErrorMessage message={errors.precio.message} />
+					{errors.username?.message && (
+						<ErrorMessage message={errors.username.message} />
 					)}
 				</div>
 				<div className='mb-5'>
 					<label
-						htmlFor='stock'
+						htmlFor='password'
 						className='block mb-2 text-sm font-medium text-white'>
-						Stock
+						Password
 					</label>
 					<input
-						type='number'
-						id='stock'
+						type='text'
+						id='password'
 						className='mb-2 border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
-						{...register('stock', { required: 'El stock es requerido' })}
+						{...register('password', { required: 'El password es requerido' })}
 					/>
-					{errors.stock?.message && (
-						<ErrorMessage message={errors.stock.message} />
+					{errors.password?.message && (
+						<ErrorMessage message={errors.password.message} />
 					)}
 				</div>
 				<div className='mb-5'>
 					<label
-						htmlFor='categoria'
+						htmlFor='role'
 						className='block mb-2 text-sm font-medium text-white'>
-						Seleccione una categoria
+						Seleccione el Rol
 					</label>
 					<select
-						id='categoria'
-						defaultValue=''
+						id='role'
+						defaultValue='USER'
 						className='border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
-						{...register('categoria', {
-							required: 'La categoria es requerida'
+						{...register('role', {
+							required: 'El role es requerido'
 						})}>
 						<option value='' disabled>
-							Seleccione una categoria
+							Seleccione un rol
 						</option>
-						{productCategory.map((category, index) => (
-							<option key={index} value={category}>
-								{category}
-							</option>
-						))}
-					</select>
-				</div>
-				<div className='mb-5'>
-					<label
-						htmlFor='proveedor'
-						className='block mb-2 text-sm font-medium text-white'>
-						Seleccione un Proveedor
-					</label>
-					<select
-						id='proveedor'
-						defaultValue=''
-						className='border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
-						{...register('proveedorId', {
-							required: 'El proveedor es requerido'
-						})}>
-						<option value='' disabled>
-							Seleccione un Proveedor
-						</option>
-						{proveedores.map(proveedor => (
-							<option key={proveedor.id} value={proveedor.id}>
-								{proveedor.nombre}
+						{userRole.map((rol, index) => (
+							<option key={index} value={rol}>
+								{rol}
 							</option>
 						))}
 					</select>
@@ -158,7 +123,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 				<button
 					type='submit'
 					className='text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'>
-					Crear Proveedor
+					Crear Usuario
 				</button>
 			</form>
 		</>

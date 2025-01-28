@@ -8,16 +8,6 @@ export interface Product {
 	stock: number;
 	categoria: string;
 	fechaIngreso: string;
-}
-
-export interface EditProduct {
-	id: number;
-	nombre: string;
-	descripcion: string;
-	precio: number;
-	stock: number;
-	categoria: string;
-	fechaIngreso: string;
 	proveedor: Proveedor;
 }
 
@@ -34,3 +24,10 @@ export const productCategory = [
 	'VESTIMENTA',
 	'DEPORTES'
 ];
+
+export interface ProductData {
+	products: Product[];
+	page: number;
+	size: number;
+	total: number;
+}

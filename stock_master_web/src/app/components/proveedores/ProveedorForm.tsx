@@ -36,7 +36,7 @@ export const ProveedorForm: React.FC<ProveedorFormProps> = ({ token }) => {
 
 	return (
 		<>
-			<form onSubmit={onSubmit} className='max-w-sm mx-auto'>
+			<form onSubmit={onSubmit} className='w-1/3 min-w-96 mx-auto'>
 				<div className='mb-5'>
 					<label
 						htmlFor='nombre'

@@ -10,15 +10,35 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 interface TableProps {
-	products: Product[];
+	token: string;
 }
 
-export const ProductTable: React.FC<TableProps> = ({ products }) => {
-	const [data, setData] = useState<Product[]>(products);
+export const ProductTable: React.FC<TableProps> = ({ token }) => {
+	const [data, setData] = useState<Product[]>([]);
+	const [page, setPage] = useState<number>(0);
+	const [total, setTotal] = useState<number>(1);
+	const [size, setSize] = useState<number>(0);
+	const [totalPages, setTotalPages] = useState<number>(0);
 
 	useEffect(() => {
-		setData(products);
-	}, [products]);
+		async function getData() {
+			try {
+				const response = await api.get(`/products?page=${page}`, {
+					headers: { Authorization: `Bearer ${token}` }
+				});
+				setData(response.data.productos);
+				setPage(response.data.page);
+				setSize(response.data.size);
+				setTotal(response.data.total);
+				setTotalPages(Math.ceil(total / size));
+			} catch (error) {
+				if (error instanceof AxiosError) {
+					toast.error(error.response?.data.error);
+				}
+			}
+		}
+		getData();
+	}, [page, token, size, total]);
 
 	const deletePost = async (id: number) => {
 		const token = await extractCustomCookie('token');
@@ -37,6 +57,18 @@ export const ProductTable: React.FC<TableProps> = ({ products }) => {
 					toast.error(error.response?.data.error);
 				}
 			});
+	};
+
+	const handleNextPage = () => {
+		if (page < totalPages - 1) {
+			setPage(prevPage => prevPage + 1);
+		}
+	};
+
+	const handlePreviousPage = () => {
+		if (page > 0) {
+			setPage(prevPage => prevPage - 1);
+		}
 	};
 
 	return (
@@ -104,6 +136,20 @@ export const ProductTable: React.FC<TableProps> = ({ products }) => {
 						))}
 					</tbody>
 				</table>
+				<div className='flex justify-center items-center my-5'>
+					<button
+						onClick={handlePreviousPage}
+						disabled={page === 0}
+						className='flex items-center justify-center px-3 h-8 text-sm font-medium border  rounded-lg bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white'>
+						Previous
+					</button>
+					<button
+						onClick={handleNextPage}
+						disabled={page === totalPages}
+						className='flex items-center justify-center px-3 h-8 ms-3 text-sm font-medium border rounded-lg bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white'>
+						Next
+					</button>
+				</div>
 			</div>
 		</>
 	);
