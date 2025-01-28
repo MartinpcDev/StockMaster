@@ -14,7 +14,7 @@ export default async function EditProductPage({
 	const product = await api.get(`/products/${id}`, {
 		headers: { Authorization: `Bearer ${token.toString()}` }
 	});
-	const proveedores = await api.get('/proveedores', {
+	const proveedores = await api.get('/proveedores?size=50', {
 		headers: { Authorization: `Bearer ${token}` }
 	});
 	return (

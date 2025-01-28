@@ -23,7 +23,7 @@ export const UsersForm: React.FC = ({}) => {
 			router.push('/dashboard/users');
 		} catch (error) {
 			if (error instanceof AxiosError) {
-				toast.error(error.response?.data.error);
+				toast.error(error.response?.data.message);
 			}
 		}
 	});
